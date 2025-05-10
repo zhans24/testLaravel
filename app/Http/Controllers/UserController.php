@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
@@ -13,6 +14,8 @@ class UserController extends Controller
         try {
             $user=User::where('email',$request['email'])->first();
             if ($user and Hash::check($request['password'],$user->password)){
+                Session::put('user_id',$user->id);
+
                 return response()->json(["message" => "Login success", "redirect" => "/zhasik"]);
             }else{
                 return response()->json(["message"=>"Email or password incorrect"]);

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\UserController;
+use App\Http\Middleware\AuthSession;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -14,7 +15,7 @@ Route::get('/auth',function (){
 
 Route::get('/zhasik',function (){
     return "zhasik";
-});
+})->middleware("auth.session");
 
 Route::post('/auth/login',[UserController::class,'login'])->name('auth.login');
 Route::post('/auth/register',[UserController::class,'register'])->name('auth.register');
